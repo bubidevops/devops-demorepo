@@ -1,0 +1,25 @@
+
+Cadence Installation
+-----------------------------------------------------------------------
+cd dev-tools/cadence-workflow/cadence_secret_tablecreate
+
+values.yaml da db bilgilerini düzenleyin.
+
+helm install cadence .
+
+
+
+Cadence Frontend Tunnel Installation
+-----------------------------------------------------------------------
+helm repo add isotoma https://isotoma.github.io/charts
+
+helm repo update
+
+helm install cadence-frontend-tunnel isotoma/socat-tunneller --set tunnel.host=cadence-frontend --set tunnel.port=7933 --set nameOverride=cadence-frontend-tunnel
+
+kubectl port-forward svc/cadence-frontend-tunnel 7933:7933
+
+docker run --rm ubercadence/cli:master --address host.docker.internal:7933 --domain vepas domain register --global_domain false
+Domain register from cadence-frontend : cadence --address cadence-frontend-tunnel:7933 --domain vepas domain register --global_domain false
+
+***Burada oluşturulan domain vepas-customer-journey servisinin konfigürasyonlarına eklenecektir.

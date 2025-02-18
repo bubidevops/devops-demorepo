@@ -1,0 +1,5 @@
+FROM ubercadence/server:0.22.1
+
+USER root
+
+RUN chmod -R 777 /etc/cadence/
